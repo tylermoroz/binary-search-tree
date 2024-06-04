@@ -5,16 +5,10 @@ import { prettyPrint } from "./prettyPrint.js";
 
 class Tree {
   constructor(array) {
-    this.root = this.buildTree(array);
+    this.root = this.buildTree([...new Set(array)].sort((a, b) => a - b));
   }
 
-  buildTree(array) {
-    const removeDupes = (array) => {
-      return array.filter((value, index) => array.indexOf(value) === index);
-    };
-
-    const sortedArray = removeDupes(array).sort((a, b) => a - b);
-
+  buildTree(sortedArray) {
     const build = (start, end) => {
       if (start > end) return null;
 
