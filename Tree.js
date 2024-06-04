@@ -9,7 +9,11 @@ class Tree {
   }
 
   buildTree(array) {
-    const sortedArray = array.sort((a, b) => a - b);
+    const removeDupes = (array) => {
+      return array.filter((value, index) => array.indexOf(value) === index);
+    };
+
+    const sortedArray = removeDupes(array).sort((a, b) => a - b);
 
     const build = (start, end) => {
       if (start > end) return null;
@@ -27,6 +31,6 @@ class Tree {
   }
 }
 
-const array = [2, 5, 3, 7, 9, 1, 34, 532, 12, 76];
+const array = [2, 5, 3, 7, 4, 1, 1, 6, 10, 8, 11];
 const tree = new Tree(array);
 prettyPrint(tree.root);
