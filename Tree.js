@@ -39,6 +39,43 @@ class Tree {
 
     this.root = insertRecursively(this.root, value);
   }
+
+  deleteItem(value) {
+    const deleteRecursively = (node, value) => {
+      if (node === null) {
+        return node;
+      }
+
+      if (value < node.data) {
+        node.left = deleteRecursively(node.left, value);
+      } else if (value > node.data) {
+        node.right = deleteRecursively(node.right, value);
+      } else {
+        if (node.left === null && node.right === null) {
+          return null;
+        }
+        if (node.left === null) {
+          return node.right;
+        } else if (node.right === null) {
+          return node.left;
+        }
+
+        let successor = this.findMinimum(node.right);
+        node.data = successor.data;
+        node.right = deleteRecursively(node.right, successor.data);
+      }
+      return node;
+    };
+    this.root = deleteRecursively(this.root, value);
+  }
+
+  findMinimum(node) {
+    let current = node;
+    while (current.left !== null) {
+      current = current.left;
+    }
+    return current;
+  }
 }
 
 const array = [2, 5, 3, 7, 4, 1, 1, 9, 6, 10, 8, 11];
@@ -47,4 +84,5 @@ tree.insert(13);
 tree.insert(14);
 tree.insert(12);
 tree.insert(0);
+tree.deleteItem(11);
 prettyPrint(tree.root);
