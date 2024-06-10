@@ -42,7 +42,7 @@ class Tree {
 
   deleteItem(value) {
     const deleteRecursively = (node, value) => {
-      if (node === null) {
+      if (!node) {
         return node;
       }
 
@@ -51,12 +51,12 @@ class Tree {
       } else if (value > node.data) {
         node.right = deleteRecursively(node.right, value);
       } else {
-        if (node.left === null && node.right === null) {
+        if (!node.left && !node.right) {
           return null;
         }
-        if (node.left === null) {
+        if (!node.left) {
           return node.right;
-        } else if (node.right === null) {
+        } else if (!node.right) {
           return node.left;
         }
 
@@ -71,7 +71,7 @@ class Tree {
 
   findMinimum(node) {
     let current = node;
-    while (current.left !== null) {
+    while (current.left) {
       current = current.left;
     }
     return current;
