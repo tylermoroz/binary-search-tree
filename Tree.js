@@ -76,6 +76,27 @@ class Tree {
     }
     return current;
   }
+
+  find(value) {
+    const findValue = (node, value) => {
+      if (node === null) {
+        return undefined;
+      }
+
+      if (node.data === value) {
+        return node;
+      }
+
+      if (node.data > value) {
+        return findValue(node.left, value);
+      } else if (node.data < value) {
+        return findValue(node.right, value);
+      }
+      return node;
+    };
+
+    return findValue(this.root, value);
+  }
 }
 
 const array = [2, 5, 3, 7, 4, 1, 1, 9, 6, 10, 8, 11];
@@ -86,3 +107,4 @@ tree.insert(12);
 tree.insert(0);
 tree.deleteItem(11);
 prettyPrint(tree.root);
+console.log(tree.find(4));
