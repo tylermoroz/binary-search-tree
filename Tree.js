@@ -97,6 +97,34 @@ class Tree {
 
     return findValue(this.root, value);
   }
+
+  levelOrder(callback) {
+    if (!this.root) {
+      return [];
+    }
+
+    let queue = [this.root];
+    let traversed = [];
+
+    while (queue.length > 0) {
+      let currentNode = queue.shift();
+
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+      }
+
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+      }
+
+      traversed.push(currentNode.data);
+
+      if (typeof callback === "function") {
+        callback(currentNode.data);
+      }
+    }
+    return traversed;
+  }
 }
 
 const array = [2, 5, 3, 7, 4, 1, 1, 9, 6, 10, 8, 11];
@@ -108,3 +136,7 @@ tree.insert(0);
 tree.deleteItem(11);
 prettyPrint(tree.root);
 console.log(tree.find(4));
+tree.levelOrder(function log(data) {
+  console.log(data);
+});
+console.log(tree.levelOrder());
