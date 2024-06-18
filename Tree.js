@@ -125,6 +125,79 @@ class Tree {
     }
     return traversed;
   }
+
+  inOrder(callback) {
+    if (!this.root) {
+      return [];
+    }
+    let traversed = [];
+    const inOrderTraversal = (node) => {
+      if (!node) {
+        return;
+      }
+
+      inOrderTraversal(node.left);
+
+      traversed.push(node.data);
+
+      if (typeof callback === "function") {
+        callback(node.data);
+      }
+
+      inOrderTraversal(node.right);
+    };
+    inOrderTraversal(this.root);
+    return traversed;
+  }
+
+  preOrder(callback) {
+    if (!this.root) {
+      return [];
+    }
+    let traversed = [];
+    const preOrderTraversal = (node) => {
+      if (!node) {
+        return;
+      }
+
+      traversed.push(node.data);
+
+      if (typeof callback === "function") {
+        callback(node.data);
+      }
+
+      preOrderTraversal(node.left);
+
+      preOrderTraversal(node.right);
+    };
+    preOrderTraversal(this.root);
+    return traversed;
+  }
+
+  postOrder(callback) {
+    if (!this.root) {
+      return [];
+    }
+
+    let traversed = [];
+
+    const postOrderTraversal = (node) => {
+      if (!node) {
+        return;
+      }
+
+      postOrderTraversal(node.left);
+      postOrderTraversal(node.right);
+
+      traversed.push(node.data);
+      if (typeof callback === "function") {
+        callback(node.data);
+      }
+    };
+
+    postOrderTraversal(this.root);
+    return traversed;
+  }
 }
 
 const array = [2, 5, 3, 7, 4, 1, 1, 9, 6, 10, 8, 11];
@@ -136,7 +209,11 @@ tree.insert(0);
 tree.deleteItem(11);
 prettyPrint(tree.root);
 console.log(tree.find(4));
-tree.levelOrder(function log(data) {
-  console.log(data);
-});
+tree.levelOrder((data) => console.log(data));
 console.log(tree.levelOrder());
+tree.inOrder((data) => console.log(data));
+console.log(tree.inOrder());
+tree.preOrder((data) => console.log(data));
+console.log(tree.preOrder());
+tree.postOrder((data) => console.log(data));
+console.log(tree.postOrder());
